@@ -2,7 +2,9 @@ import json
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-with open("eva-data.json", "r", encoding="utf-8") as file:
+data_filename = input("Enter the data filename: ").strip()
+
+with open(data_filename, "r", encoding="utf-8") as file:
     eva_data = json.load(file)
 
 selected_country = input("Enter a country (USA or Russia): ").strip()
@@ -14,17 +16,20 @@ for eva in eva_data:
     date_text = eva.get("date")
     duration_text = eva.get("duration")
 
-    if not date_text or not duration_text:
+    if not duration_text:
         continue
 
-    date = datetime.fromisoformat(date_text)
     hours, minutes = map(int, duration_text.split(":"))
     duration_hours = hours + minutes / 60
 
-    records.append((date, duration_hours))
-
     if eva.get("country", "").casefold() == selected_country.casefold():
         country_total_hours += duration_hours
+
+    if not date_text:
+        continue
+
+    date = datetime.fromisoformat(date_text)
+    records.append((date, duration_hours))
 
 print(
     f"Total EVA duration for {selected_country}: "

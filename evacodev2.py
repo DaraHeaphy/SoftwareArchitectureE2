@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 with open("eva-data.json", "r", encoding="utf-8") as file:
     eva_data = json.load(file)
 
+selected_country = input("Enter a country (USA or Russia): ").strip()
+
 records = []
+country_total_hours = 0
 
 for eva in eva_data:
     date_text = eva.get("date")
@@ -19,6 +22,14 @@ for eva in eva_data:
     duration_hours = hours + minutes / 60
 
     records.append((date, duration_hours))
+
+    if eva.get("country", "").casefold() == selected_country.casefold():
+        country_total_hours += duration_hours
+
+print(
+    f"Total EVA duration for {selected_country}: "
+    f"{country_total_hours:.2f} hours"
+)
 
 records.sort(key=lambda record: record[0])
 

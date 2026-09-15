@@ -9,3 +9,17 @@ Which parts of the current program do you expect to change? Add the country prom
 Which parts do you expect to leave untouched? Keep JSON loading, missing date/duration handling, chronological sorting, cumulative-total calculation, and plotting unchanged.
 
 What existing behaviour might accidentally be affected? The added prompt changes the run interaction. Mistakes in the filter could affect country totals, while edits to shared duration handling could affect the existing plot.
+
+Week 2: Post-Change Review
+
+Did I change more code than I needed to? No. The loop adjustment was needed to include durations from records with missing dates while preserving the plot.
+
+Would another developer understand what I changed? Yes. The prompt, country accumulator, and country match are named clearly.
+
+Did I duplicate behaviour that already existed elsewhere? No. The country total reuses the existing duration conversion.
+
+Are there assumptions another developer would need to discover? The user is expected to enter USA or Russia; any other input currently returns zero.
+
+How confident am I that I have not broken existing behaviour? Both country totals were checked against the JSON, and the generated plot was byte-for-byte unchanged.
+
+What correction was necessary? The total now includes duration-bearing records without dates; corrected totals are USA 1360.07 hours and Russia 626.58 hours.

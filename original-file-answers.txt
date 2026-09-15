@@ -1,0 +1,11 @@
+﻿Week 2: Pre-Edit Planning (Based on the Original Program)
+
+Where do you think the new functionality belongs? Prompt for a country before processing, then total matching EVA durations in the existing record-processing loop.
+
+Which existing data or processing can you reuse? Reuse eva_data, each record's country and duration fields, and the existing duration_hours conversion.
+
+Which parts of the current program do you expect to change? Add the country prompt, a country-total accumulator and filter, and a printed result.
+
+Which parts do you expect to leave untouched? Keep JSON loading, missing date/duration handling, chronological sorting, cumulative-total calculation, and plotting unchanged.
+
+What existing behaviour might accidentally be affected? The added prompt changes the run interaction. Mistakes in the filter could affect country totals, while edits to shared duration handling could affect the existing plot.

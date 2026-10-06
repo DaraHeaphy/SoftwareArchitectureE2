@@ -11,6 +11,7 @@ selected_country = input("Enter a country (USA or Russia): ").strip()
 
 records = []
 country_total_hours = 0
+category_counts = {"Short": 0, "Standard": 0, "Long": 0}
 
 for eva in eva_data:
     date_text = eva.get("date")
@@ -21,6 +22,14 @@ for eva in eva_data:
 
     hours, minutes = map(int, duration_text.split(":"))
     duration_hours = hours + minutes / 60
+
+    if duration_hours < 4:
+        category = "Short"
+    elif duration_hours < 7:
+        category = "Standard"
+    else:
+        category = "Long"
+    category_counts[category] += 1
 
     if eva.get("country", "").casefold() == selected_country.casefold():
         country_total_hours += duration_hours
@@ -35,6 +44,12 @@ print(
     f"Total EVA duration for {selected_country}: "
     f"{country_total_hours:.2f} hours"
 )
+
+classified_evas = sum(category_counts.values())
+print("EVA duration categories (all EVAs with a duration):")
+for category, count in category_counts.items():
+    percentage = count / classified_evas * 100 if classified_evas else 0
+    print(f"{category}: {count} EVAs ({percentage:.2f}%)")
 
 records.sort(key=lambda record: record[0])
 
